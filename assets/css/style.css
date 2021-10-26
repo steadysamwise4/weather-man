@@ -2,7 +2,7 @@
     background-color: black;
 }
 
-.jumbotron {
+.container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,4 +12,55 @@
     font-size: 3.8rem;
     text-align: center;
     color:aqua;
+    padding: 0 10px;
 }
+.weather-content {
+    color: aqua;
+}
+.content-holder {
+    display: flex;
+
+}
+.input {
+    color:white;
+    margin:15px auto;
+    font-size: 1.5rem;
+}
+.cityInput {
+    background-color: white;
+    color:black;
+}
+.search {
+    outline: none;
+    border: none;
+    display: inline-block;
+    padding: 10px 15px;
+    
+    font-size: 1.5rem;
+    border-radius: 12px;
+    position: relative;
+    top: 10px;
+    box-shadow: 0 3px gray;
+    color:black;
+    width: 230px;
+    padding: 5px 7px;
+    margin: 10px auto;
+    background:darkmagenta;
+    color: #fff;
+}
+.search:hover {
+    box-shadow: 0 2px var(--grey);
+    top: 8px;
+  }
+    .search:active {
+    box-shadow: 0 0px var(--grey);
+    top: 0;
+  }
+  .a {
+    text-decoration: none;
+    color:aqua
+
+  }
+  .a:hover {
+      color:darkmagenta;
+  }
