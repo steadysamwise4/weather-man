@@ -68,8 +68,8 @@
     top: 8px;
   }
     .search:active {
-    box-shadow: 0 0px var(--grey);
-    top: 0;
+    box-shadow: 0 2px var(--grey);
+    top: 7px;
   }
   .a {
     text-decoration: none;
