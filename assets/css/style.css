@@ -22,7 +22,7 @@
 
 }
 .clip-holder {
-    width: 50%;
+    width: 425px;
 }
 .weather-content {
     color: aqua;
@@ -79,9 +79,18 @@
   .a:hover {
       color:darkmagenta;
   }
+  .forecast-heading {
+      border-top: darkmagenta solid 1px;
+      border-bottom: darkmagenta solid 1px;
+      margin: auto;
+      padding:0.5rem
+  }
   .card-container {
       justify-content: space-between;
   }
   .day {
       padding:0px;
+  }
+  p {
+      margin-bottom: 0.1rem;
   }

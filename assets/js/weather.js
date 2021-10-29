@@ -29,16 +29,21 @@ var displayCityData = function(currentWeather, searchTerm) {
         // append
         
         cityDataEl.appendChild(iconEl);
-    
-    // format temp
-    var temp = Math.round(currentWeather.main.temp);
-    // create a container for temp
-    var currentTempEl = document.createElement("p");
-    
-    currentTempEl.textContent = "Currently: " + temp + "°F";
-    // append temp to the dom
-    cityDataEl.appendChild(currentTempEl);
-
+        
+        // format temp
+        var temp = Math.round(currentWeather.main.temp);
+        // create a container for temp
+        var currentTempEl = document.createElement("p");
+        
+        currentTempEl.textContent = "Currently: " + temp + "°F";
+        // append temp to the dom
+        cityDataEl.appendChild(currentTempEl);
+        
+        // format humid
+        var humid = currentWeather.main.humidity;
+        var currentHumidEl = document.createElement("p");
+        currentHumidEl.textContent = humid + "% Humidity";
+        cityDataEl.appendChild(currentHumidEl);
     
 }
 
