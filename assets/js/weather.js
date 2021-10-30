@@ -4,16 +4,74 @@ var stateInputEl = document.querySelector("#stateInput");
 var cityHeadingEl = document.querySelector("#citySearch");
 var cityContentEl = document.querySelector(".city-content");
 var cityDataEl = document.querySelector(".city-data");
-var cityIconEl = document.querySelector(".icon");
+var historyEl = document.querySelector(".history");
 var cityTempEl = document.querySelector(".temp");
 var cityHumidityEl = document.querySelector(".humid");
 var cityWindEL = document.querySelector(".wind");
 var cityUltraEL = document.querySelector(".ultra-v");
 var currentTimeEl = document.querySelector("#currentTime");
 
+var buttonClickHandler = function(event) {
+    var cityClick = event.target.getAttribute("data-city");
+    if (cityClick) {
+        cityInputEl.textContent = cityClick;
+        getCityWeather(cityClick);
+    }
+}
+
+var buildMenu = function() {
+    //console.log(cityArray);
+    $(".history").empty();
+    for (var i = 0; i < cityArray.length; i++) {
+        //console.log(cityArray[i]);
+        var aTag = document.createElement("button");
+        aTag.textContent = cityArray[i];
+        aTag.setAttribute("data-city", cityArray[i]);
+        aTag.classList= "col-12 a";
+      // var aTag = $("<button>").addClass("col-12 a").data("data-city", cityArray[i]).text(cityArray[i]);
+       // aTag.onclick = getCityWeather(cityArray[i]);
+        $(".history").append(aTag);
+
+       
+    }
+
+}
+
+var cityArray = JSON.parse(localStorage.getItem("cityArray")) || [];
+
+function saveMenu(city) {
+    if (cityArray.length >= 11) {
+        cityArray.shift();
+    }
+    if (cityArray.indexOf(city) === -1) {
+
+        cityArray.push(city);
+        localStorage.setItem("cityArray", JSON.stringify(cityArray));
+    }
+    buildMenu();
+}
+
+var getCityWeather = function(city) {
+    // format the open weather api url
+    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city +"&units=imperial&appid=9ac94d5206a0a04e92ba7cbf64fe39f8";
+
+    // make a request to the url
+    fetch(apiUrl).then(function(response) {
+        response.json().then(function(data) {
+            displayCityData(data, city);
+        });
+    });
+    
+    
+}
+
+
+
+
+buildMenu();
 var displayCityData = function(currentWeather, searchTerm) {
     // clear old content
-    cityHeadingEl.textContent = searchTerm;
+    cityHeadingEl.textContent = currentWeather.name;
     cityDataEl.textContent = "";
     console.log(currentWeather);
     console.log(searchTerm);
@@ -30,7 +88,7 @@ var displayCityData = function(currentWeather, searchTerm) {
         // format icon
         var icon = currentWeather.weather[0].icon;
         var iconEl = document.createElement("img");
-        iconEl.setAttribute("src", "http://openweathermap.org/img/w/"+ icon + ".png");
+        iconEl.setAttribute("src", "http://openweathermap.org/img/w/" + icon + ".png");
         // append
         
         cityDataEl.appendChild(iconEl);
@@ -65,53 +123,23 @@ var formSubmitHandler = function(event) {
     var cityState = cityName + "," + stateName
     if (cityName && stateInput) {
         getCityWeather(cityState);
+        saveMenu(cityName);
         cityInputEl.value = "";
         stateInputEl.value = "";
     } else if (cityName && !stateInput) {
         cityState = cityName;
         getCityWeather(cityName);
+        saveMenu(cityName);
         cityInputEl.value = "";
     } else if (!cityName && !stateInput) {
     console.log("error");
     }
-    saveMenu(cityName);
-}
-var cityArray = JSON.parse(localStorage.getItem("cityArray")) || [];
-function saveMenu(city) {
-    if (cityArray.indexOf(city) === -1) {
-
-        cityArray.push(city);
-        localStorage.setItem("cityArray", JSON.stringify(cityArray));
-    }
-    buildMenu();
-}
-
-var buildMenu = function() {
-    console.log(cityArray);
-    $(".history").empty();
-    for (var i = 0; i < cityArray.length; i++) {
-        console.log(cityArray[i]);
-        var aTag = $("<button>").addClass("col-12 a").text(cityArray[i]);
-        aTag.onclick = getCityWeather(cityArray[i]);
-        $(".history").append(aTag);
-
-    }
-
-}
-
-
-var getCityWeather = function(city) {
-    // format the open weather api url
-    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city +"&units=imperial&appid=9ac94d5206a0a04e92ba7cbf64fe39f8";
-
-    // make a request to the url
-    fetch(apiUrl).then(function(response) {
-        response.json().then(function(data) {
-            displayCityData(data, city);
-        });
-    });
-    
     
 }
+
+
+
+
 
 userFormEl.addEventListener("submit", formSubmitHandler);
+historyEl.addEventListener("click", buttonClickHandler);

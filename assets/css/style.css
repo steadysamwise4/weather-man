@@ -29,6 +29,7 @@
 }
 .content-holder {
     display: flex;
+    width:100%;
 
 }
 .input {
@@ -41,6 +42,9 @@
     color:black;
     border-radius: 12px;
     text-align: center;
+}
+.cityInput:hover {
+    background-color: lightcyan;
 }
 .history {
     text-align:center;
@@ -65,15 +69,16 @@
 }
 .search:hover {
     box-shadow: 0 2px var(--grey);
-    top: 8px;
-  }
+    
+  } 
     .search:active {
     box-shadow: 0 2px var(--grey);
     top: 7px;
   }
   .a {
     text-decoration: none;
-    color:aqua
+    color:aqua;
+    border: 0;
 
   }
   .a:hover {
