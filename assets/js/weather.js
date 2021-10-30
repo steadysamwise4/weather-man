@@ -2,14 +2,14 @@ var userFormEl = document.querySelector(".form-holder");
 var cityInputEl = document.querySelector(".cityInput");
 var stateInputEl = document.querySelector("#stateInput");
 var cityHeadingEl = document.querySelector("#citySearch");
+var currentTimeEl = document.querySelector("#currentTime");
 var cityContentEl = document.querySelector(".city-content");
 var cityDataEl = document.querySelector(".city-data");
 var historyEl = document.querySelector(".history");
-var cityTempEl = document.querySelector(".temp");
-var cityHumidityEl = document.querySelector(".humid");
-var cityWindEL = document.querySelector(".wind");
-var cityUltraEL = document.querySelector(".ultra-v");
-var currentTimeEl = document.querySelector("#currentTime");
+var dayCardEl = document.querySelector(".day");
+var cardHeadingZeroEl = document.querySelector("#first-day");
+var cityWindEL = document.querySelector(".one");
+var cityUltraEL = document.querySelector(".two");
 
 var buttonClickHandler = function(event) {
     var cityClick = event.target.getAttribute("data-city");
@@ -65,10 +65,36 @@ var getCityWeather = function(city) {
     
 }
 
-
+var getForecastData = function(latitude, longitude) {
+    //format the open weather api forcast url
+    var apiForecast = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&exclude=minutely,hourly,alerts&units=imperial&appid=9ac94d5206a0a04e92ba7cbf64fe39f8";
+    // make the request to the url
+    fetch(apiForecast).then(function(response) {
+        response.json().then(function(data) {
+            displayForecastData(data);
+        });
+    });
+}
 
 
 buildMenu();
+
+var displayForecastData = function(forecast) {
+    console.log(forecast);
+    //clear old content
+    dayCardEl.textContent = "";
+
+    // format and load correct date headings
+    var zero = moment().add(1, 'days').format('dddd');
+    
+    var first = document.createElement("h4");
+    first.className = "card-head";
+    first.setAttribute("id", "first-date");
+    first.textContent = zero;
+    cardHeadingZeroEl.appendChild(first);
+
+}
+
 var displayCityData = function(currentWeather, searchTerm) {
     // clear old content
     cityHeadingEl.textContent = currentWeather.name;
@@ -112,6 +138,11 @@ var displayCityData = function(currentWeather, searchTerm) {
         var windEl = document.createElement("p");
         windEl.textContent = "Average Wind Speed: " + wind + " MPH";
         cityDataEl.appendChild(windEl);
+
+        // formatting latitude and longitude
+        var lat = currentWeather.coord.lat;
+        var lon = currentWeather.coord.lon;
+        getForecastData(lat, lon);
 }
 
 var formSubmitHandler = function(event) {
