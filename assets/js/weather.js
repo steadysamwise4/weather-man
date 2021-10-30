@@ -21,6 +21,11 @@ var displayCityData = function(currentWeather, searchTerm) {
     var timeEl = moment().format('MMMM Do YYYY, h:mm a');
     // append time to dom
     currentTimeEl.textContent = " - " + timeEl;
+        //description
+        var descript = currentWeather.weather[0].description;
+        var descriptEl = document.createElement("p");
+        descriptEl.textContent = descript;
+        cityDataEl.appendChild(descriptEl);
     
         // format icon
         var icon = currentWeather.weather[0].icon;
@@ -44,7 +49,11 @@ var displayCityData = function(currentWeather, searchTerm) {
         var currentHumidEl = document.createElement("p");
         currentHumidEl.textContent = humid + "% Humidity";
         cityDataEl.appendChild(currentHumidEl);
-    
+        // wind speed
+        var wind = Math.round(currentWeather.wind.speed);
+        var windEl = document.createElement("p");
+        windEl.textContent = "Average Wind Speed: " + wind + " MPH";
+        cityDataEl.appendChild(windEl);
 }
 
 var formSubmitHandler = function(event) {
@@ -63,10 +72,32 @@ var formSubmitHandler = function(event) {
         getCityWeather(cityName);
         cityInputEl.value = "";
     } else if (!cityName && !stateInput) {
-    alert("Please enter a valid city name");
+    console.log("error");
     }
+    saveMenu(cityName);
+}
+var cityArray = JSON.parse(localStorage.getItem("cityArray")) || [];
+function saveMenu(city) {
+    if (cityArray.indexOf(city) === -1) {
+
+        cityArray.push(city);
+        localStorage.setItem("cityArray", JSON.stringify(cityArray));
+    }
+    buildMenu();
 }
 
+var buildMenu = function() {
+    console.log(cityArray);
+    $(".history").empty();
+    for (var i = 0; i < cityArray.length; i++) {
+        console.log(cityArray[i]);
+        var aTag = $("<button>").addClass("col-12 a").text(cityArray[i]);
+        aTag.onclick = getCityWeather(cityArray[i]);
+        $(".history").append(aTag);
+
+    }
+
+}
 
 
 var getCityWeather = function(city) {
