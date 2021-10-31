@@ -11,6 +11,7 @@
     <title>Weather Man</title>
 </head>
 <body class="jumbotron">
+  <div class = "content">
     <header class="header">
         <h1 class="page-title"> Welcome to: Weather, Man...</h1>
 
@@ -24,6 +25,7 @@
     <container class="content-holder row">
         <section class="input-section col-12 col-lg-3">
             <div class="input">
+                <p class="err"><span id="error"></span></p>
                 
                     
                 <form class="form-holder d-flex flex-column align-items-center">
@@ -64,7 +66,9 @@
 
             </div>
             <div class="forecast-container row col-12">
-                <h2 class="forecast-heading col-12">5 Day Forecast</h2>
+                <div class="holder">
+                <!-- <h2 class="forecast-heading col-12"></h2> -->
+                </div>
                 <div class="card-container row col-12">
                     <card class="day col-12 col-lg-2" id="first-day">
                         <!--<h4 class="card-head" id="first-date"></h4>
@@ -110,11 +114,22 @@
 
         
             </div>
+            <div class="quotes">
+                <!-- <p>"The temperature at the airport is 88 degrees..., but that's stupid, man.., cause I don't know anyone who lives at the airport." Al Sleet</p> -->
+            </div>
 
         </section>
     </container>
+  </div>
+    <footer class="footer row">
+        <div class="col-12">
+            <p class="addOne">Brought to you by <strong>Fulsomes EggNog</strong> - made from only the freshest of eggs and only the finest hand picked nog.</p>
+            <p class="addTwo">Also sponsored by <strong>Parsons Pest Control</strong> - Do you have termites, waterbugs and roaches? Eliminate them with our patented spray! It doesn't kill the bugs, but it fills them with self-doubt as to whether or not they're in the right house.</p>
+        </div>
+    </footer>
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="./assets/js/quotes.js"></script>
     <script src="./assets/js/weather.js"></script>
 
 </body>

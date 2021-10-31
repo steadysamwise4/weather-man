@@ -1,11 +1,23 @@
 * {
     background-color: black;
 }
-
+html, body {
+    height: 100%;
+}
+.content {
+    flex: 1 0 auto;
+    width:100%;
+}
+.footer {
+    flex-shrink: 0;
+    color:slategray;
+    text-align: center;
+}
 .jumbotron {
     display: flex;
     flex-direction: column;
     align-items: center;
+    color: black;
 }
 .header {
     width: 100%;
@@ -31,6 +43,7 @@
 }
 .city-content {
     margin-top: 20px;
+    margin-bottom: 30px;
 }
 .forecast-container {
     margin:auto;
@@ -139,6 +152,23 @@
       color: white;
       width:fit-content;
       padding:0 5px;
+  }
+  .quotes {
+      text-align: center;
+  }
+  .addOne {
+      margin-top: 25px;
+      border-bottom: 1px solid darkmagenta;
+      padding-bottom: 25px;
+  }
+  .addTwo {
+      margin-top: 25px;
+      padding-bottom:20px;  
+  }
+  .err {
+      color: red;
+      font-size: 1.1rem;
+      text-align: center;
   }
   @media screen and (max-width: 992px) {
     .weather-content {

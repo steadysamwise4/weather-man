@@ -12,6 +12,28 @@ var cardHeadingOneEl = document.querySelector("#second-day");
 var cardHeadingTwoEl = document.querySelector("#third-day");
 var cardHeadingThreeEl = document.querySelector("#fourth-day");
 var cardHeadingFourEl = document.querySelector("#fifth-day");
+var holderEl = document.querySelector('.holder');
+var quotesEl = document.querySelector(".quotes");
+var errorEl = document.querySelector("#error");
+
+let currentQuote = {};
+
+var pageLoad = function() {
+    availableQuotes = [...quotesArr];
+    randomQuote();
+}
+
+var randomQuote = function() {
+
+    const quotesArrIndex = Math.floor(Math.random() * availableQuotes.length);
+    currentQuote = availableQuotes[quotesArrIndex];
+    var funQuoteEl = document.createElement('p');
+    funQuoteEl.textContent = '"' + currentQuote + '"' + " - Al Sleet";
+    funQuoteEl.classList = "quote-text";
+    quotesEl.appendChild(funQuoteEl);
+}
+
+pageLoad();
 
 var buttonClickHandler = function(event) {
     var cityClick = event.target.getAttribute("data-city");
@@ -33,8 +55,7 @@ var buildMenu = function() {
       // var aTag = $("<button>").addClass("col-12 a").data("data-city", cityArray[i]).text(cityArray[i]);
        // aTag.onclick = getCityWeather(cityArray[i]);
         $(".history").append(aTag);
-
-       
+   
     }
 
 }
@@ -53,18 +74,27 @@ function saveMenu(city) {
     buildMenu();
 }
 
+var errorText = function() {
+    var error = "Please enter a valid city name!";
+    errorEl.textContent = error;
+    setTimeout(function() {errorEl.textContent = ""; }, 2000);
+    }
+
 var getCityWeather = function(city) {
     // format the open weather api url
     var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city +"&units=imperial&appid=9ac94d5206a0a04e92ba7cbf64fe39f8";
 
     // make a request to the url
     fetch(apiUrl).then(function(response) {
+        if (response.ok) {
         response.json().then(function(data) {
+            saveMenu(data.name);
             displayCityData(data, city);
         });
-    });
-    
-    
+        } else {
+            errorText();
+        }
+    });    
 }
 
 var getForecastData = function(latitude, longitude) {
@@ -78,49 +108,10 @@ var getForecastData = function(latitude, longitude) {
     });
 }
 
-
 buildMenu();
 
 var displayForecastData = function(forecast) {
-    console.log(forecast);
     
-    
-    // format and load correct date headings
-    // var zero = moment().add(1, 'days').format('dddd');
-    // var first = document.createElement("h4");
-    // first.className = "card-head";
-    // first.setAttribute("id", "first-date");
-    // first.textContent = zero;
-    // cardHeadingZeroEl.appendChild(first);
-
-    // var one = moment().add(2, 'days').format('dddd');
-    // var second = document.createElement("h4");
-    // second.className = "card-head";
-    // second.setAttribute("id", "second-date");
-    // second.textContent = one;
-    // cardHeadingOneEl.appendChild(second);
-
-    // var two = moment().add(3, 'days').format('dddd');
-    // var third = document.createElement("h4");
-    // third.className = "card-head";
-    // third.setAttribute("id", "third-date");
-    // third.textContent = two;
-    // cardHeadingTwoEl.appendChild(third);
-
-    // var three = moment().add(4, 'days').format('dddd');
-    // var fourth = document.createElement("h4");
-    // fourth.className = "card-head";
-    // fourth.setAttribute("id", "fourth-date");
-    // fourth.textContent = three;
-    // cardHeadingThreeEl.appendChild(fourth);
-
-    // var four = moment().add(5, 'days').format('dddd');
-    // var fifth = document.createElement("h4");
-    // fifth.className = "card-head";
-    // fifth.setAttribute("id", "fifth-date");
-    // fifth.textContent = four;
-    // cardHeadingFourEl.appendChild(fifth);
-
     // format and load UV Index
     var uv = forecast.current.uvi;
     var ultra = "  UV Index: " + forecast.current.uvi + "  ";
@@ -145,19 +136,17 @@ var displayForecastData = function(forecast) {
     // display 5 day forecast
     var displayFiveDay = function(i, day,) {
 
-        
+         // clear old
+         day.textContent = "";
+
         // date headings
         iPlus = i + 1;
         var zero = moment().add(iPlus, 'days').format('dddd');
         var first = document.createElement("h4");
         first.className = "card-head";
         first.textContent = zero;
-        console.log(zero);
         day.appendChild(first);
         
-        // clear old
-        day.textContent = "";
-
     var descOne = forecast.daily[i].weather[0].description;
     var descOneEl = document.createElement('p');
     descOneEl.textContent = descOne;
@@ -188,8 +177,6 @@ var displayForecastData = function(forecast) {
     windOneEl.textContent = "Wind: " + windOne + " MPH";
     day.appendChild(windOneEl);
 
-
-
     }
     displayFiveDay(0, cardHeadingZeroEl);
     displayFiveDay(1, cardHeadingOneEl);
@@ -203,8 +190,14 @@ var displayCityData = function(currentWeather, searchTerm) {
     // clear old content
     cityHeadingEl.textContent = currentWeather.name;
     cityDataEl.textContent = "";
-    console.log(currentWeather);
-    console.log(searchTerm);
+    holderEl.textContent = "";
+    quotesEl.textContent ="";
+
+    var fiveDay = "5 Day Forecast";
+    var fiveDayEl = document.createElement('h2');
+    fiveDayEl.classList = "forecast-heading col-12";
+    fiveDayEl.textContent = fiveDay;
+    holderEl.appendChild(fiveDayEl);
     // format time
     var timeEl = moment().format('MMMM Do YYYY, h:mm a');
     // append time to dom
@@ -246,9 +239,7 @@ var displayCityData = function(currentWeather, searchTerm) {
         // formatting latitude and longitude
         var lat = currentWeather.coord.lat;
         var lon = currentWeather.coord.lon;
-
-        
-        
+       
         getForecastData(lat, lon);
 }
 
@@ -258,26 +249,22 @@ var formSubmitHandler = function(event) {
     var cityName = cityInputEl.value.trim();
     var stateInput = stateInputEl.value.trim();
     var stateName = "US-" + stateInput;
-    var cityState = cityName + "," + stateName
+    var cityState = cityName + "," + stateName;
     if (cityName && stateInput) {
         getCityWeather(cityState);
-        saveMenu(cityName);
+        //saveMenu(cityName);
         cityInputEl.value = "";
         stateInputEl.value = "";
     } else if (cityName && !stateInput) {
         cityState = cityName;
         getCityWeather(cityName);
-        saveMenu(cityName);
+        //saveMenu(cityName);
         cityInputEl.value = "";
     } else if (!cityName && !stateInput) {
-    console.log("error");
+        errorText();
     }
     
 }
-
-
-
-
 
 userFormEl.addEventListener("submit", formSubmitHandler);
 historyEl.addEventListener("click", buttonClickHandler);
