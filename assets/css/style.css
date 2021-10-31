@@ -29,6 +29,9 @@
     margin:auto;
     justify-content: center;
 }
+.city-content {
+    margin-top: 20px;
+}
 .forecast-container {
     margin:auto;
     justify-content: center;

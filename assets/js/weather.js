@@ -6,7 +6,7 @@ var currentTimeEl = document.querySelector("#currentTime");
 var cityContentEl = document.querySelector(".city-content");
 var cityDataEl = document.querySelector(".city-data");
 var historyEl = document.querySelector(".history");
-var dayCardEl = document.querySelector(".day");
+var dayContainerEl = document.querySelector(".card-container");
 var cardHeadingZeroEl = document.querySelector("#first-day");
 var cardHeadingOneEl = document.querySelector("#second-day");
 var cardHeadingTwoEl = document.querySelector("#third-day");
@@ -83,44 +83,43 @@ buildMenu();
 
 var displayForecastData = function(forecast) {
     console.log(forecast);
-    //clear old content
-    dayCardEl.textContent = "";
-
+    
+    
     // format and load correct date headings
-    var zero = moment().add(1, 'days').format('dddd');
-    var first = document.createElement("h4");
-    first.className = "card-head";
-    first.setAttribute("id", "first-date");
-    first.textContent = zero;
-    cardHeadingZeroEl.appendChild(first);
+    // var zero = moment().add(1, 'days').format('dddd');
+    // var first = document.createElement("h4");
+    // first.className = "card-head";
+    // first.setAttribute("id", "first-date");
+    // first.textContent = zero;
+    // cardHeadingZeroEl.appendChild(first);
 
-    var one = moment().add(2, 'days').format('dddd');
-    var second = document.createElement("h4");
-    second.className = "card-head";
-    second.setAttribute("id", "second-date");
-    second.textContent = one;
-    cardHeadingOneEl.appendChild(second);
+    // var one = moment().add(2, 'days').format('dddd');
+    // var second = document.createElement("h4");
+    // second.className = "card-head";
+    // second.setAttribute("id", "second-date");
+    // second.textContent = one;
+    // cardHeadingOneEl.appendChild(second);
 
-    var two = moment().add(3, 'days').format('dddd');
-    var third = document.createElement("h4");
-    third.className = "card-head";
-    third.setAttribute("id", "third-date");
-    third.textContent = two;
-    cardHeadingTwoEl.appendChild(third);
+    // var two = moment().add(3, 'days').format('dddd');
+    // var third = document.createElement("h4");
+    // third.className = "card-head";
+    // third.setAttribute("id", "third-date");
+    // third.textContent = two;
+    // cardHeadingTwoEl.appendChild(third);
 
-    var three = moment().add(4, 'days').format('dddd');
-    var fourth = document.createElement("h4");
-    fourth.className = "card-head";
-    fourth.setAttribute("id", "fourth-date");
-    fourth.textContent = three;
-    cardHeadingThreeEl.appendChild(fourth);
+    // var three = moment().add(4, 'days').format('dddd');
+    // var fourth = document.createElement("h4");
+    // fourth.className = "card-head";
+    // fourth.setAttribute("id", "fourth-date");
+    // fourth.textContent = three;
+    // cardHeadingThreeEl.appendChild(fourth);
 
-    var four = moment().add(5, 'days').format('dddd');
-    var fifth = document.createElement("h4");
-    fifth.className = "card-head";
-    fifth.setAttribute("id", "fifth-date");
-    fifth.textContent = four;
-    cardHeadingFourEl.appendChild(fifth);
+    // var four = moment().add(5, 'days').format('dddd');
+    // var fifth = document.createElement("h4");
+    // fifth.className = "card-head";
+    // fifth.setAttribute("id", "fifth-date");
+    // fifth.textContent = four;
+    // cardHeadingFourEl.appendChild(fifth);
 
     // format and load UV Index
     var uv = forecast.current.uvi;
@@ -144,10 +143,21 @@ var displayForecastData = function(forecast) {
     cityDataEl.appendChild(ultraEL);
 
     // display 5 day forecast
-    var displayFiveDay = function(i, day) {
+    var displayFiveDay = function(i, day,) {
 
+        
+        // date headings
+        iPlus = i + 1;
+        var zero = moment().add(iPlus, 'days').format('dddd');
+        var first = document.createElement("h4");
+        first.className = "card-head";
+        first.textContent = zero;
+        console.log(zero);
+        day.appendChild(first);
+        
         // clear old
-    day.textContent = "";
+        day.textContent = "";
+
     var descOne = forecast.daily[i].weather[0].description;
     var descOneEl = document.createElement('p');
     descOneEl.textContent = descOne;
@@ -183,9 +193,9 @@ var displayForecastData = function(forecast) {
     }
     displayFiveDay(0, cardHeadingZeroEl);
     displayFiveDay(1, cardHeadingOneEl);
-    displayFiveDay(2, cardHeadingTwoEl);
-    displayFiveDay(3, cardHeadingThreeEl);
-    displayFiveDay(4, cardHeadingFourEl);
+    displayFiveDay(2, cardHeadingTwoEl,);
+    displayFiveDay(3, cardHeadingThreeEl,);
+    displayFiveDay(4, cardHeadingFourEl, );
 
 }
 
