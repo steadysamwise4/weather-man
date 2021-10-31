@@ -9,4 +9,4 @@ Below you will find a link to the deployed application and a screenshot.
 
 https://steadysamwise4.github.io/weather-man
 
-![weather-man](.assets/images/weather.png)
+![weather-man](./assets/images/weather.png)
