@@ -26,6 +26,11 @@
 }
 .weather-content {
     color: aqua;
+    margin:auto;
+    justify-content: center;
+}
+.forecast-container {
+    margin:auto;
 }
 .content-holder {
     display: flex;
@@ -96,6 +101,7 @@
   }
   .day {
       padding:0px;
+      text-align: center;
   }
   p {
       margin-bottom: 0.1rem;
@@ -129,4 +135,27 @@
       color: white;
       width:fit-content;
       padding:0 5px;
+  }
+  @media screen and (max-width: 992px) {
+    .weather-content {
+      text-align: center;
+    }
+    .good {  
+        margin: auto;
+    }
+    .ok {
+      margin: auto;
+    }
+    .moderate {
+        margin: auto;
+    }
+    .danger {
+        margin: auto;
+    }
+    .meltdown {
+        margin: auto;
+    }
+    .day {
+        border-bottom: darkmagenta solid 1px;
+    }
   }

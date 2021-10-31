@@ -108,14 +108,14 @@ var displayForecastData = function(forecast) {
     third.textContent = two;
     cardHeadingTwoEl.appendChild(third);
 
-    var three = moment().add(3, 'days').format('dddd');
+    var three = moment().add(4, 'days').format('dddd');
     var fourth = document.createElement("h4");
     fourth.className = "card-head";
     fourth.setAttribute("id", "fourth-date");
     fourth.textContent = three;
     cardHeadingThreeEl.appendChild(fourth);
 
-    var four = moment().add(4, 'days').format('dddd');
+    var four = moment().add(5, 'days').format('dddd');
     var fifth = document.createElement("h4");
     fifth.className = "card-head";
     fifth.setAttribute("id", "fifth-date");
@@ -141,8 +141,48 @@ var displayForecastData = function(forecast) {
     } else {
         ultraEL.className = "meltdown";
     }
-    
     cityDataEl.appendChild(ultraEL);
+
+    // display 5 day forecast
+    var displayFiveDay = function(i, day) {
+    var descOne = forecast.daily[i].weather[0].description;
+    var descOneEl = document.createElement('p');
+    descOneEl.textContent = descOne;
+    day.appendChild(descOneEl);
+
+    var iconOne = forecast.daily[i].weather[0].icon;
+    var iconOneEl = document.createElement('img');
+    iconOneEl.setAttribute("src", "http://openweathermap.org/img/w/" + iconOne + ".png");
+    day.appendChild(iconOneEl);
+
+    var hiOne = Math.round(forecast.daily[i].temp.max);
+    var hiOneEl = document.createElement('p');
+    hiOneEl.textContent = "H: " + hiOne + "°F";
+    day.appendChild(hiOneEl);
+
+    var lowOne = Math.round(forecast.daily[i].temp.min);
+    var lowOneEl = document.createElement('p');
+    lowOneEl.textContent = "L: " + lowOne + "°F";
+    day.appendChild(lowOneEl);
+
+    var humidOne = forecast.daily[i].humidity;
+    var humidOneEl = document.createElement('p');
+    humidOneEl.textContent = humidOne + "% Humidity";
+    day.appendChild(humidOneEl);
+
+    var windOne = Math.round(forecast.daily[i].wind_speed);
+    var windOneEl = document.createElement('p');
+    windOneEl.textContent = "Wind: " + windOne + " MPH";
+    day.appendChild(windOneEl);
+
+
+
+    }
+    displayFiveDay(0, cardHeadingZeroEl);
+    displayFiveDay(1, cardHeadingOneEl);
+    displayFiveDay(2, cardHeadingTwoEl);
+    displayFiveDay(3, cardHeadingThreeEl);
+    displayFiveDay(4, cardHeadingFourEl);
 
 }
 
