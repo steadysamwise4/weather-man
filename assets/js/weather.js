@@ -8,8 +8,10 @@ var cityDataEl = document.querySelector(".city-data");
 var historyEl = document.querySelector(".history");
 var dayCardEl = document.querySelector(".day");
 var cardHeadingZeroEl = document.querySelector("#first-day");
-var cityWindEL = document.querySelector(".one");
-var cityUltraEL = document.querySelector(".two");
+var cardHeadingOneEl = document.querySelector("#second-day");
+var cardHeadingTwoEl = document.querySelector("#third-day");
+var cardHeadingThreeEl = document.querySelector("#fourth-day");
+var cardHeadingFourEl = document.querySelector("#fifth-day");
 
 var buttonClickHandler = function(event) {
     var cityClick = event.target.getAttribute("data-city");
@@ -86,12 +88,61 @@ var displayForecastData = function(forecast) {
 
     // format and load correct date headings
     var zero = moment().add(1, 'days').format('dddd');
-    
     var first = document.createElement("h4");
     first.className = "card-head";
     first.setAttribute("id", "first-date");
     first.textContent = zero;
     cardHeadingZeroEl.appendChild(first);
+
+    var one = moment().add(2, 'days').format('dddd');
+    var second = document.createElement("h4");
+    second.className = "card-head";
+    second.setAttribute("id", "second-date");
+    second.textContent = one;
+    cardHeadingOneEl.appendChild(second);
+
+    var two = moment().add(3, 'days').format('dddd');
+    var third = document.createElement("h4");
+    third.className = "card-head";
+    third.setAttribute("id", "third-date");
+    third.textContent = two;
+    cardHeadingTwoEl.appendChild(third);
+
+    var three = moment().add(3, 'days').format('dddd');
+    var fourth = document.createElement("h4");
+    fourth.className = "card-head";
+    fourth.setAttribute("id", "fourth-date");
+    fourth.textContent = three;
+    cardHeadingThreeEl.appendChild(fourth);
+
+    var four = moment().add(4, 'days').format('dddd');
+    var fifth = document.createElement("h4");
+    fifth.className = "card-head";
+    fifth.setAttribute("id", "fifth-date");
+    fifth.textContent = four;
+    cardHeadingFourEl.appendChild(fifth);
+
+    // format and load UV Index
+    var uv = forecast.current.uvi;
+    var ultra = "  UV Index: " + forecast.current.uvi + "  ";
+    var ultraEL = document.createElement('p');
+    ultraEL.textContent = ultra;
+    if (uv <= 2) {
+        ultraEL.className = "good";
+    }
+    else if (uv > 2 && uv <= 5) {
+        ultraEL.className = "ok";
+    }
+    else if (uv > 5 && uv <= 7) {
+        ultraEL.className = "moderate";
+    }
+    else if (uv > 7 && uv <= 10) {
+        ultraEL.className = "danger";
+    } else {
+        ultraEL.className = "meltdown";
+    }
+    
+    cityDataEl.appendChild(ultraEL);
 
 }
 
@@ -142,6 +193,9 @@ var displayCityData = function(currentWeather, searchTerm) {
         // formatting latitude and longitude
         var lat = currentWeather.coord.lat;
         var lon = currentWeather.coord.lon;
+
+        
+        
         getForecastData(lat, lon);
 }
 

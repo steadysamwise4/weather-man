@@ -42,6 +42,7 @@
     color:black;
     border-radius: 12px;
     text-align: center;
+    width: 200px;
 }
 .cityInput:hover {
     background-color: lightcyan;
@@ -98,4 +99,34 @@
   }
   p {
       margin-bottom: 0.1rem;
+  }
+  .good {
+      background-color: green;
+      color: white;
+      width:fit-content;
+      padding:0 5px;
+  }
+  .ok {
+    background-color: yellow;
+    color: black;
+    width:fit-content;
+    padding:0 5px; 
+  }
+  .moderate {
+    background-color: orange;
+      color: black;
+      width:fit-content;
+      padding:0 5px;
+  }
+  .danger {
+    background-color: red;
+      color: white;
+      width:fit-content;
+      padding:0 5px;
+  }
+  .meltdown {
+    background-color: rgba(146, 43, 214, 0.582);
+      color: white;
+      width:fit-content;
+      padding:0 5px;
   }
