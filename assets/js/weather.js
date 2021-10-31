@@ -145,6 +145,9 @@ var displayForecastData = function(forecast) {
 
     // display 5 day forecast
     var displayFiveDay = function(i, day) {
+
+        // clear old
+    day.textContent = "";
     var descOne = forecast.daily[i].weather[0].description;
     var descOneEl = document.createElement('p');
     descOneEl.textContent = descOne;
